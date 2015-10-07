@@ -1,17 +1,22 @@
-    <div class="row" ng-controller="WeatherController2">
+    <div class="row">
         <div class="form-group" class="col-md-4">
+           <label for="location">Location:</label>
+           <input type="text" class="form-control" ng-model="location"> <br>
+<!--
             <label for="latitude">Latitude:</label>
             <input type="text" class="form-control"  ng-model="latitude"> <br>
             <label for="longitude">Longitude:</label>
             <input type="text" class="form-control"  ng-model="longitude"> <br> 
-            <button type="button" class="btn btn-info" ng-click = "getWeather()">Stiny! Get me the weather!</button>
+-->
+            <button type="button" class="btn btn-info" ng-click = "getWeather()">Get the weather!</button>
             <hr>
             <br>
             <label for="summary">Currently: {{ weatherData.currently.summary }} </label>
             <p></p> <br>
             <label for="temp">Temp: {{ weatherData.currently.temperature }} </label>
             <br> <br>
-            <p>Coords given: {{ weatherData.latitude }} , {{ weatherData.longitude }} </p>
+            <p>Coordinates: {{ weatherData.latitude }} , {{ weatherData.longitude }} </p>
+<!--            <p> {{  }} </p>-->
             
             <p></p><br>
         </div>
