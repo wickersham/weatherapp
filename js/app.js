@@ -34,12 +34,19 @@ app.factory("weatherService3", function($http) {
     //http get
         return $http.jsonp(baseUrlwithwkey + latitude + "," + longitude + "?callback=JSON_CALLBACK");
     };
-    
     return service;
     
 });
 
-app.controller ("WeatherController3", function($scope, $http, weatherService3) {
+app.factory("geocodeService3", function($http) {
+    var service = {};
+    service.getGeocode = function(location) {
+        return $http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=" + gkey);
+    };
+    return service;
+});
+
+app.controller ("WeatherController3", function($scope, weatherService3, geocodeService3) {
     
     $scope.location = "";
     $scope.weatherData = {};
@@ -48,15 +55,16 @@ app.controller ("WeatherController3", function($scope, $http, weatherService3) {
     $scope.getWeather = function() {
         var latitude = 0;
         var longitude = 0;
-        $http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + $scope.location + "&key=" + gkey)
+        
+        geocodeService3.getGeocode($scope.location)
             .success(function(response) {
                 latitude = response.results[0].geometry.location.lat;
                 longitude = response.results[0].geometry.location.lng;
-                console.log(latitude);
-                console.log(longitude);
+
                     weatherService3.get(latitude, longitude)
                         .success(function(response) {
                         $scope.weatherData = response;
+                        console.log(response);
                         })
                         .error(function(error) {
                         console.log(err);
